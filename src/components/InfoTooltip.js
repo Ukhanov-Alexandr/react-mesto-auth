@@ -1,7 +1,6 @@
 import React from "react";
 import regsuc from "../images/reg1.png";
 import regfail from "../images/reg-faild.svg";
-import "./infoTooltip.css";
 
 function InfoTooltip({ isOpen, onClose, loggedIn }) {
   const handleOverlayClick = (evt) => {

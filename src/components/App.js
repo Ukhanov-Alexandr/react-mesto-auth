@@ -29,7 +29,9 @@ function App() {
   const [serverError, setServerError] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
+
+  const history = useHistory();
 
   const closeConfirmationPopup = useCallback(() => {
     setDeletedCard(null);
@@ -47,32 +49,40 @@ function App() {
     setServerError(error);
   }, []);
 
-  const handleCardLike = useCallback((card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    if (isLiked) {
-      api
-        .unlikeCard(card._id)
-        .then((res) => {
-          setCards((state) => state.map((c) => (c._id === card._id ? res : c)));
-        })
-        .catch((err) => {
-          console.log(`Ошибка с кодом: ${err.errorCode}`);
-          console.dir(err);
-          openErrorPopup(err);
-        });
-    } else {
-      api
-        .setlikeCard(card._id)
-        .then((res) => {
-          setCards((state) => state.map((c) => (c._id === card._id ? res : c)));
-        })
-        .catch((err) => {
-          console.log(`Ошибка с кодом: ${err.errorCode}`);
-          console.dir(err);
-          openErrorPopup(err);
-        });
-    }
-  }, []);
+  const handleCardLike = useCallback(
+    (card) => {
+      const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+      if (isLiked) {
+        api
+          .unlikeCard(card._id)
+          .then((res) => {
+            setCards((state) =>
+              state.map((c) => (c._id === card._id ? res : c))
+            );
+          })
+          .catch((err) => {
+            console.log(`Ошибка с кодом: ${err.errorCode}`);
+            console.dir(err);
+            openErrorPopup(err);
+          });
+      } else {
+        api
+          .setlikeCard(card._id)
+          .then((res) => {
+            setCards((state) =>
+              state.map((c) => (c._id === card._id ? res : c))
+            );
+          })
+          .catch((err) => {
+            console.log(`Ошибка с кодом: ${err.errorCode}`);
+            console.dir(err);
+            openErrorPopup(err);
+          });
+      }
+    },
+    [currentUser]
+  );
 
   const handleCardDelete = useCallback((card) => {
     setIsRequestingServer(true);
@@ -221,66 +231,75 @@ function App() {
       });
   }, []);
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const history = useHistory();
-
-
+//ниже реализован функционал 12 спринта
   const handleSignUp = ({ email, password }) => {
     if (!email || !password) {
       return;
     }
     auth
       .register(email, password)
-      .then((data) => {
-        console.log(data);
-        setTimeout(() => {
+      .then((res) => {
+        if (res.ok) {
           setLoggedIn(true);
-          history.push("/sign-in");
-        }, 1000);
+          setIsInfoTooltipOpen(true);
+          setTimeout(() => {
+            history.push("/sign-in");
+          }, 800);
+        } else {
+          setLoggedIn(false);
+          setIsInfoTooltipOpen(true);
+          setTimeout(() => {
+            history.push("/sign-in");
+          }, 800);
+        }
       })
       .catch((err) => console.log(err));
-      setLoggedIn(true);
-      setIsInfoTooltipOpen(true);
   };
 
-  const handleLogin = ({email, password}) => {
-    console.log(`мейл - ${email}, пароль - ${password}`);
-    auth.authorize(email, password)
+  const handleLogin = ({ email, password }) => {
+    auth
+      .authorize(email, password)
       .then((data) => {
-      console.log(data)
-      if (data.token) {
-        setLoggedIn(true);
-        setTimeout(() => {
-          history.push("/");
-        }, 1000);
-      }
-    });
-  }
+        if (data.token) {
+          setTimeout(() => {
+            setLoggedIn(true);
+            tokenCheck();
+          }, 100);
+        } else {
+          setLoggedIn(false);
+          setIsInfoTooltipOpen(true);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     tokenCheck();
-  }, []);
+  }, [loggedIn]);
+
+  function signOut() {
+    localStorage.removeItem("jwt");
+    history.push("/sign-in");
+    setLoggedIn(false);
+  }
 
   function tokenCheck() {
-    // console.log(localStorage.getItem('jwt'))
-    if (localStorage.getItem('jwt')){
-      const jwt = localStorage.getItem('jwt');
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt");
       // здесь будем проверять токен
       auth.getContent(jwt).then((res) => {
-        console.log(res.data.email)
-        setEmail(res.data.email)
+        setEmail(res.data.email);
         if (res) {
           setLoggedIn(true);
           history.push("/");
         }
-      })
+      });
     }
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header loggedIn={loggedIn} isInfoTooltipOpen={isInfoTooltipOpen} email={email}/>
+      <Header signOut={signOut} email={email} />
       <Switch>
         <ProtectedRoute
           loggedIn={loggedIn}
@@ -308,11 +327,13 @@ function App() {
         </Route>
 
         <Route path="/sign-in">
-          <Login 
-            onLogin={handleLogin}
+          <Login onLogin={handleLogin} />
+          <InfoTooltip
+            loggedIn={loggedIn}
+            isOpen={isInfoTooltipOpen}
+            onClose={closeAllPopups}
           />
         </Route>
-
       </Switch>
       <Footer />
       <EditProfilePopup

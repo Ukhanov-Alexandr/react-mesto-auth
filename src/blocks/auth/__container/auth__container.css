@@ -1,0 +1,10 @@
+.auth__container {
+  color: #fff;
+  box-sizing: border-box;
+  max-height: 476px;
+  max-width: 358px;
+  position: relative;
+  top: 38px;
+  width: 100%;
+  text-align: center;
+}

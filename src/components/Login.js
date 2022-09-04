@@ -1,17 +1,8 @@
 import React, { useState } from "react";
-import "./register.css";
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,22 +15,22 @@ const Login = ({ onLogin }) => {
   }
 
   return (
-    <main className="content">
-      <section className="auth">
+    <main className="auth">
+      <section className="auth__container">
         <form className="auth__form" onSubmit={handleSubmit}>
           <h1 className="auth__title">Вход</h1>
           <input
             className="auth__input"
             type="email"
             value={email}
-            onChange={handleEmailChange}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           ></input>
           <input
             className="auth__input"
             type="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Пароль"
           ></input>
           <button className="auth__button-submit">Войти</button>

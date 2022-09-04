@@ -11,22 +11,23 @@ export const register = (email, password) => {
       email: email,
     }),
   })
-    .then((response) => {
-      return response.json();
-    })
-    .then((res) => {
-      console.log(res);
-      return res;
-    })
-    .catch((err) => {
-      if (err.status === 400) {
-        console.log(err + "некорректно заполнено одно из полей");
-      }
-    });
+    // .then((response) => {
+    //   // console.log(response);
+    //   return response.json();
+    // })
+    // .then((res) => {
+    //   // console.log(res);
+    //   return res;
+    // })
+    // .catch((err) => {
+    //   if (err.status === 400) {
+    //     console.log(err + "некорректно заполнено одно из полей");
+    //   }
+    // });
 };
 
 export const authorize = (email, password) => {
-  console.log(email, password);
+  // console.log(email, password);
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
@@ -35,7 +36,6 @@ export const authorize = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((response) => {
-      // console.log(response.json().PromiseResult.token)
       return response.json();
     })
     .then((data) => {
@@ -45,7 +45,6 @@ export const authorize = (email, password) => {
         return data;
       }
     })
-    .catch((err) => console.log(err));
 };
 
 export const getContent = (token) => {
@@ -59,6 +58,4 @@ export const getContent = (token) => {
     .then(res => res.json())
     .then(data => data)
   } 
-
-//   asdfas@asv.agfcd
 

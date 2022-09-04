@@ -11,7 +11,7 @@ function Main({
   onCardLike,
   onCardDelete,
 }) {
-
+  
   const currentUser = React.useContext(CurrentUserContext);
   const cardsElements = cards.map((item) => (
     <Card
@@ -22,7 +22,7 @@ function Main({
       onTrashClick={onCardDelete}
     />
   ));
-
+  
   return (
     <main className="main">
       <section className="profile">
