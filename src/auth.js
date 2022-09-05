@@ -11,19 +11,6 @@ export const register = (email, password) => {
       email: email,
     }),
   })
-    // .then((response) => {
-    //   // console.log(response);
-    //   return response.json();
-    // })
-    // .then((res) => {
-    //   // console.log(res);
-    //   return res;
-    // })
-    // .catch((err) => {
-    //   if (err.status === 400) {
-    //     console.log(err + "некорректно заполнено одно из полей");
-    //   }
-    // });
 };
 
 export const authorize = (email, password) => {

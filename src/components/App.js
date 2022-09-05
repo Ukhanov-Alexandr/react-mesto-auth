@@ -154,6 +154,13 @@ function App() {
     isInfoTooltipOpen,
   ]);
 
+  const handleOverlayClick = (evt) => {
+    if (evt.target === evt.currentTarget) {
+      console.log(evt.target === evt.currentTarget)
+      closeAllPopups();
+    }
+  };
+
   const handleUpdateUser = useCallback((data) => {
     setIsRequestingServer(true);
     api
@@ -263,7 +270,8 @@ function App() {
         if (data.token) {
           setTimeout(() => {
             setLoggedIn(true);
-            tokenCheck();
+            auth.getContent(localStorage.getItem("jwt")).then((res)=>setEmail(res.data.email))
+            history.push("/");
           }, 100);
         } else {
           setLoggedIn(false);
@@ -275,7 +283,7 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
-  }, [loggedIn]);
+  }, []);
 
   function signOut() {
     localStorage.removeItem("jwt");
@@ -293,7 +301,8 @@ function App() {
           setLoggedIn(true);
           history.push("/");
         }
-      });
+      })
+      .catch((err) => console.log(err));;
     }
   }
 
@@ -332,6 +341,7 @@ function App() {
             loggedIn={loggedIn}
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopups}
+            handleOverlayClick={handleOverlayClick}
           />
         </Route>
       </Switch>
@@ -341,18 +351,21 @@ function App() {
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}
         isRequesting={isRequestingServer}
+        handleOverlayClick={handleOverlayClick}
       />
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         onAddPlace={handleAddPlaceSubmit}
         isRequesting={isRequestingServer}
+        handleOverlayClick={handleOverlayClick}
       />
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
         onUpdateAvatar={handleUpdateAvatar}
         isRequesting={isRequestingServer}
+        handleOverlayClick={handleOverlayClick}
       />
       <ConfirmationPopup
         card={deletedCard}
@@ -365,6 +378,7 @@ function App() {
         name="image"
         card={selectedCard}
         onClose={closeAllPopups}
+        handleOverlayClick={handleOverlayClick}
       />
       <ErrorPopup error={serverError} onClose={closeErrorPopup} />
     </CurrentUserContext.Provider>

@@ -1,12 +1,6 @@
 import React from "react";
 
-function ImagePopup({name, card, onClose}) {
-
-  const handleOverlayClick = (evt) => {
-    if (evt.target === evt.currentTarget) {
-      onClose();
-    }
-  }
+function ImagePopup({name, card, onClose, handleOverlayClick}) {
 
   return (
     <div

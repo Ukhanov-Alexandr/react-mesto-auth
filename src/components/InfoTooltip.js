@@ -2,12 +2,7 @@ import React from "react";
 import regsuc from "../images/reg1.png";
 import regfail from "../images/reg-faild.svg";
 
-function InfoTooltip({ isOpen, onClose, loggedIn }) {
-  const handleOverlayClick = (evt) => {
-    if (evt.target === evt.currentTarget) {
-      onClose();
-    }
-  };
+function InfoTooltip({ isOpen, onClose, loggedIn, handleOverlayClick }) {
 
   return (
     <div

@@ -3,7 +3,7 @@ import PopupWithForm from "./PopupWithForm";
 import useFormValidations from "../hoocks/useFormValidations";
 import {addPlaceInitialValues} from '../utils/constants'
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace, isRequesting }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isRequesting, handleOverlayClick }) {
   const {
     values,
     isErrors,
@@ -35,6 +35,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isRequesting }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      handleOverlayClick={handleOverlayClick}
     >
       <input
         className={`popup__input popup__input_type_caption ${

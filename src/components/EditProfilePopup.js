@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import useFormValidations from "../hoocks/useFormValidations";
 import {editProfileInitialValues} from '../utils/constants'
 
-function EditProfilePopup({isOpen, onClose, onUpdateUser, isRequesting}) {
+function EditProfilePopup({isOpen, onClose, onUpdateUser, isRequesting, handleOverlayClick}) {
   const currentUser = React.useContext(CurrentUserContext);
   const {values, isErrors, errorMessages, handleValueChange, setValues, resetErrors} = useFormValidations(editProfileInitialValues);
 
@@ -30,6 +30,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, isRequesting}) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      handleOverlayClick={handleOverlayClick}
     >
       <input
         className={`popup__input popup__input_type_name ${isErrors["input-name"] ? 'popup__input_type_error' : '' }`}

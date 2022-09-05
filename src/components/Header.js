@@ -5,7 +5,6 @@ import logo from "../images/logo.svg";
 
 function Header({ signOut, email }) {
   const { pathname } = useLocation();
-  console.log(email);
   return (
     <header className="header">
       <img className="logo" src={logo} alt="логотип" />

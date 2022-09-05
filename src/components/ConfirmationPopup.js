@@ -8,6 +8,12 @@ function ConfirmationPopup({ card, onSubmit, onClose, isRequesting }) {
     onSubmit(card);
   }
 
+  const handleOverlayClick = (evt) => {
+    if (evt.target === evt.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
     <PopupWithForm
       title="Вы уверены?"
@@ -15,6 +21,7 @@ function ConfirmationPopup({ card, onSubmit, onClose, isRequesting }) {
       isOpen={!!card}
       onClose={onClose}
       onSubmit={handleSubmit}
+      handleOverlayClick={handleOverlayClick}
     >
       <button className="popup__btn-save form__submit" type="submit">
         { isRequesting ? 'Удаление..' : 'Да' }
