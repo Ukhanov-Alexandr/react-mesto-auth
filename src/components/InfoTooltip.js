@@ -16,7 +16,7 @@ function InfoTooltip({ isOpen, onClose, loggedIn, handleOverlayClick }) {
           onClick={() => onClose()}
         ></button>
         <img className="infoTooltip__image " src={loggedIn ? regsuc : regfail} alt="логотип" />
-        <h3 className="popup__title infoTooltip__title">
+        <h3 className="infoTooltip__title">
             {loggedIn ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.' }
         </h3>
       </div>
