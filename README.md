@@ -32,4 +32,4 @@ _рефакторинг импортов;_
 _переименовать картинки;_  
 _привести картинки к одному формату;_  
 _дополнить readme;_ 
->### [Ссылка на проект](https://react-mesto-auth-three.vercel.app/)
+>### [Ссылка на проект](https://react-mesto-auth-6ivbjfi73-ukhanov-alexandr.vercel.app)
