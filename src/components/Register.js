@@ -22,20 +22,21 @@ const Register = ({ onSignUp }) => {
             className="auth__input"
             type="email"
             value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           ></input>
           <input
             className="auth__input"
             type="password"
             value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Пароль"
           ></input>
           <button className="auth__button-submit">Зарегистрироваться</button>
-          <Link to="/sign-in" className="auth__link">
-            Уже зарегистрированы? Войти
-          </Link>
+          <p className="auth__question">
+            Уже зарегистрированы?
+            <Link to="/sign-in" className="auth__link"> Войти</Link>
+          </p>
         </form>
       </section>
     </main>

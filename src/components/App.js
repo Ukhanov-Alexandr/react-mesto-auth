@@ -255,9 +255,9 @@ function App() {
         } else {
           setLoggedIn(false);
           setIsInfoTooltipOpen(true);
-          setTimeout(() => {
-            history.push("/sign-in");
-          }, 800);
+          // setTimeout(() => {
+          //   history.push("/sign-in");
+          // }, 800);
         }
       })
       .catch((err) => console.log(err));
@@ -332,6 +332,7 @@ function App() {
             loggedIn={loggedIn}
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopups}
+            handleOverlayClick={handleOverlayClick}
           />
         </Route>
 

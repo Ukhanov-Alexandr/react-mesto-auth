@@ -12,6 +12,7 @@
 @import url(./blocks/auth/__title/auth__title.css);
 @import url(./blocks/auth/__input/auth__input.css);
 @import url(./blocks/auth/__button-submit/auth__button-submit.css);
+@import url(./blocks/auth/__question/auth__question.css);
 @import url(./blocks/auth/__link/auth__link.css);
 @import url(./blocks/infoTooltip/infoTooltip.css);
 @import url(./blocks/infoTooltip/__container/infoTooltip__container.css);
