@@ -270,7 +270,7 @@ function App() {
         if (data.token) {
           setTimeout(() => {
             setLoggedIn(true);
-            auth.getContent(localStorage.getItem("jwt")).then((res)=>setEmail(res.data.email))
+            setEmail(email)
             history.push("/");
           }, 100);
         } else {
